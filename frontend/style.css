@@ -1,0 +1,59 @@
+/* Core configuration rules */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background-color: #060a13; color: #f1f5f9; font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 30px; }
+
+.container { width: 100%; max-width: 1150px; background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 24px; padding: 40px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6); display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; }
+@media (max-width: 900px) { .container { grid-template-columns: 1fr; } }
+
+.header { grid-column: span 2; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 20px; margin-bottom: -10px; }
+@media (max-width: 900px) { .header { grid-column: span 1; } }
+.header h1 { font-size: 28px; font-weight: 700; color: #10b981; display: flex; align-items: center; gap: 12px; }
+.header p { color: #64748b; margin-top: 4px; font-size: 15px; }
+
+.form-panel, .analytics-panel { display: flex; flex-direction: column; gap: 24px; }
+h3 { font-size: 18px; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; border-left: 4px solid #10b981; padding-left: 10px; }
+
+/* Numerical form configurations */
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+label { font-size: 14px; font-weight: 600; color: #cbd5e1; }
+.input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+input[type="number"] { background: #1e293b; border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 10px; color: white; font-family: inherit; font-size: 15px; }
+input:focus { border-color: #10b981; outline: none; }
+
+/* Structural checklists */
+.checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.check-card { background: #1e293b; border: 1px solid rgba(255,255,255,0.05); padding: 14px; border-radius: 10px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: background 0.2s; }
+.check-card:hover { background: #24334d; }
+.check-card input { width: 18px; height: 18px; accent-color: #10b981; }
+
+/* Interactive dropboxes */
+.dropzone { border: 2px dashed rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.02); border-radius: 14px; padding: 25px; text-align: center; cursor: pointer; transition: all 0.2s; position: relative; }
+.dropzone:hover { border-color: #10b981; background: rgba(16, 185, 129, 0.05); }
+.dropzone i { font-size: 36px; color: #10b981; margin-bottom: 10px; }
+.dropzone p { font-size: 14px; color: #94a3b8; }
+#mediaInput { display: none; }
+
+.preview-box { background: #1e293b; height: 160px; border-radius: 14px; overflow: hidden; display: none; align-items: center; justify-content: center; position: relative; }
+.preview-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.clear-btn { position: absolute; top: 8px; right: 8px; background: rgba(239, 68, 68, 0.9); border: none; color: white; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+/* Pipeline Action Trigger Buttons */
+.run-btn { background: #10b981; border: none; padding: 15px; border-radius: 12px; color: #060a13; font-weight: 700; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+.run-btn:disabled { background: #334155; color: #64748b; cursor: not-allowed; }
+
+/* Server Response Cards */
+.results-box { background: rgba(30, 41, 59, 0.25); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 30px; min-height: 380px; display: flex; flex-direction: column; justify-content: center; }
+.empty-state { text-align: center; color: #475569; }
+.empty-state i { font-size: 48px; margin-bottom: 15px; display: block; }
+
+.score-card { text-align: center; padding: 20px; border-radius: 14px; margin-bottom: 24px; }
+.score-card .score-title { font-size: 32px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; display: block; }
+.score-card .score-meta { font-size: 14px; color: #cbd5e1; margin-top: 4px; display: block; }
+
+.sop-box h4 { font-size: 14px; color: #94a3b8; margin-bottom: 12px; text-transform: uppercase; }
+.sop-list { list-style: none; }
+.sop-list li { background: rgba(30, 41, 59, 0.6); padding: 12px 16px; border-left: 4px solid #38bdf8; border-radius: 0 8px 8px 0; margin-bottom: 10px; font-size: 14px; line-height: 1.4; color: #e2e8f0; }
+
+/* Loading indicators */
+.loader { display: none; border: 3px solid #1e293b; border-top: 3px solid #060a13; border-radius: 50%; width: 20px; height: 20px; animation: spin 0.8s linear infinite; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
