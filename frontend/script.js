@@ -32,20 +32,21 @@ let uploadedFile = null;
 let base64MediaString = null;
 
 // ========================================================
-// INSTANT FRONTEND-ONLY LOGIN PASS BYPASS
+// FRONTEND BYPASS & ROLE ASSIGNMENT ENGINE
 // ========================================================
 function handleLogin(event) {
-    event.preventDefault(); // Stop page from hard refreshing
+    event.preventDefault();
     
     const inputUsername = document.getElementById('username').value;
+    const selectedRole = document.getElementById('userRole').value;
     
-    // Instantly hide login card and show dashboard workspace
     loginOverlay.style.display = 'none';
     appContainer.style.display = 'flex';
     
-    // Dynamically update the profile label to show what you typed
-    displayUser.innerText = inputUsername || "Inspector Arya";
+    displayUser.innerText = inputUsername || "Authorized User";
+    document.querySelector('.user-info small').innerText = `${selectedRole} Account`;
     
+    window.currentUserRole = selectedRole;
     refreshSidebarWidgets();
 }
 
@@ -55,7 +56,7 @@ function handleLogout() {
     document.getElementById('password').value = '';
 }
 
-// Route dropzone click into file element
+// Media Handling Hooks
 dropzone.addEventListener('click', () => mediaInput.click());
 
 mediaInput.addEventListener('change', function(e) {
@@ -240,7 +241,9 @@ async function syncOfflineData() {
     }
 }
 
-// SIDEBAR NAV INTERACTIVE VIEWS
+// ========================================================
+// DYNAMIC VIEW CHANGER ENGINE (OFFICER + CULTIVATOR ILLUSIONS)
+// ========================================================
 batchHistoryMenu.addEventListener('click', function(e) {
     e.preventDefault();
     liveRiskMenu.classList.remove('active');
@@ -250,13 +253,86 @@ batchHistoryMenu.addEventListener('click', function(e) {
     emptyState.style.display = 'block';
     activeContent.style.display = 'none';
     
-    emptyState.innerHTML = `
-        <i class="fa-solid fa-box-archive" style="color: var(--text-muted);"></i>
-        <p><strong>No Local Records Cached</strong></p>
-        <span style="font-size: 13px; color: var(--text-muted); display:block; margin-top:5px;">
-            All historical evaluation threads have completed upstream database sync. Node index is fresh.
-        </span>
-    `;
+    if (window.currentUserRole === "Officer") {
+        emptyState.innerHTML = `
+            <div style="text-align: left;">
+                <h4 style="color: var(--text-primary); margin-bottom: 5px;"><i class="fa-solid fa-globe"></i> District Regional Telemetry Matrix</h4>
+                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 15px;">
+                    Displaying macro aggregated risk tracking across monitored farming sectors.
+                </p>
+                <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid var(--border-color); color: var(--text-secondary);">
+                            <th style="padding: 8px 0;">Zone Sector</th>
+                            <th>Active Farmers</th>
+                            <th>Avg Temp/Hum</th>
+                            <th>Current Risk Index</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid var(--border-color);">
+                            <td style="padding: 10px 0; font-weight:600;">Sector Alpha (North)</td>
+                            <td>42</td>
+                            <td>24.5°C / 72%</td>
+                            <td style="color: #10b981; font-weight:700;">LOW</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border-color);">
+                            <td style="padding: 10px 0; font-weight:600;">Sector Beta (East)</td>
+                            <td>19</td>
+                            <td>29.1°C / 88%</td>
+                            <td style="color: #ef4444; font-weight:700;">HIGH (Flacherie Alert)</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border-color);">
+                            <td style="padding: 10px 0; font-weight:600;">Sector Gamma (South)</td>
+                            <td>31</td>
+                            <td>26.0°C / 78%</td>
+                            <td style="color: #f59e0b; font-weight:700;">MEDIUM</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        `;
+    } else if (window.currentUserRole === "Cultivator") {
+        emptyState.innerHTML = `
+            <div style="text-align: left;">
+                <h4 style="color: var(--text-primary); margin-bottom: 5px;"><i class="fa-solid fa-network-wired"></i> Assigned Cluster Monitor</h4>
+                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 15px;">
+                    Tracking active cooperative cycles under your supervisor token.
+                </p>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <div style="background: var(--bg-main); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <strong style="font-size:14px; display:block;">Greenwood Nest Cluster</strong>
+                            <span style="font-size:12px; color:var(--text-secondary);">14 Farmers • Chawki Rearing Stage</span>
+                        </div>
+                        <span style="background:#10b981; color:white; padding:4px 8px; border-radius:12px; font-size:11px; font-weight:700;">STABLE</span>
+                    </div>
+                    <div style="background: var(--bg-main); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <strong style="font-size:14px; display:block;">Silk Valley Hub</strong>
+                            <span style="font-size:12px; color:var(--text-secondary);">8 Farmers • 5th Instar Feeding Stage</span>
+                        </div>
+                        <span style="background:#f59e0b; color:white; padding:4px 8px; border-radius:12px; font-size:11px; font-weight:700;">ATTENTION</span>
+                    </div>
+                    <div style="background: var(--bg-main); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <strong style="font-size:14px; display:block;">Resham Village Alliance</strong>
+                            <span style="font-size:12px; color:var(--text-secondary);">22 Farmers • Cocoon Spinning Cycle</span>
+                        </div>
+                        <span style="background:#10b981; color:white; padding:4px 8px; border-radius:12px; font-size:11px; font-weight:700;">STABLE</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    } else {
+        emptyState.innerHTML = `
+            <i class="fa-solid fa-box-archive" style="color: var(--text-muted);"></i>
+            <p><strong>Batch History Dashboard (Farmer)</strong></p>
+            <span style="font-size: 13px; color: var(--text-muted); display:block; margin-top:5px;">
+                Displaying your personal rearing shed history logs. All completed threads have synced safely.
+            </span>
+        `;
+    }
 });
 
 liveRiskMenu.addEventListener('click', function(e) {
