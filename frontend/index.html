@@ -28,6 +28,14 @@
                     <label>Security Password</label>
                     <input type="password" id="password" placeholder="••••••••" required>
                 </div>
+                <div class="form-group">
+                    <label>Access Tier / Role</label>
+                    <select id="userRole" style="width: 100%; background: var(--bg-input); border: 1px solid var(--border-color); padding: 12px; border-radius: 10px; color: var(--text-primary); font-family: inherit; font-size: 15px;">
+                        <option value="Farmer">🚜 Farmer (Local Shed Workspace)</option>
+                        <option value="Cultivator">🌱 Cultivator (Cluster Management)</option>
+                        <option value="Officer">👮 Sericulture Officer (District Admin)</option>
+                    </select>
+                </div>
                 <button type="submit" class="login-btn">Authenticate Session</button>
             </form>
         </div>
